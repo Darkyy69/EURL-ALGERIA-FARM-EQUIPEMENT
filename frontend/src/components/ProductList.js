@@ -5,7 +5,7 @@ export default function ProductList({ products }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
-        <Link key={product.slug} href={`/${product.slug}`} className="group">
+        <Link key={product.slug} href={`${product.slug}`} className="group">
           <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
             <div className="aspect-w-16 aspect-h-9">
               <img
