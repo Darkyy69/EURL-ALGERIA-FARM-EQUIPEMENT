@@ -6,7 +6,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,6 +14,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Snowflake,
   Truck,
@@ -31,8 +31,6 @@ import {
   ChevronRight,
   ChevronDown,
 } from "lucide-react";
-import Icon from "@mdi/react";
-import { mdiFacebook, mdiInstagram, mdiLinkedin } from "@mdi/js";
 
 // News data
 const newsItems = [
@@ -204,75 +202,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div class="absolute inset-0 z-10 h-[176px] w-full opacity-85 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[rgba(0,0,0,0.75)] before:via-[rgba(0,0,0,0.5)_76%] before:to-transparent"></div>
-      <div className="absolute top-0 w-full h-36 z-20">
-        {/* Top Bar */}
-        <div className="bg-gray-100 py-2 px-4 text-sm hidden md:block">
-          <div className="container mx-auto flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                +213 21 40 53 46
-              </span>
-              <span className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                contact@algeriafarm.com
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Globe className="w-4 h-4" />
-              <select
-                onChange={(e) => changeLocale(e.target.value)}
-                value={currentLocale}
-                className="bg-gray-100 border-none text-sm"
-              >
-                {languages.map((lang) => (
-                  <option key={lang.value} value={lang.value}>
-                    {lang.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Header */}
-        <header className="bg-transparent">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="drop-shadow-[0px_0px_30px_#fff]">
-                <img
-                  src="/logo-nobg-removebg-preview.png"
-                  alt="Algeria Farm Equipment Logo"
-                  width={200}
-                  height={60}
-                  className="h-20 w-auto"
-                />
-              </div>
-              <nav className="hidden md:flex items-center gap-8 text-white">
-                <a href="#" className="hover:text-green-600">
-                  {t("nav.home")}
-                </a>
-                <a href="#" className="hover:text-green-600">
-                  {t("nav.company")}
-                </a>
-                <a href="#" className="hover:text-green-600">
-                  {t("nav.products")}
-                </a>
-                <a href="#" className="hover:text-green-600">
-                  {t("nav.portfolio")}
-                </a>
-                <a href="#" className="hover:text-green-600">
-                  {t("nav.library")}
-                </a>
-                <a href="#" className="hover:text-green-600">
-                  {t("nav.contactUs")}
-                </a>
-              </nav>
-            </div>
-          </div>
-        </header>
-      </div>
+      <div className="absolute inset-0 z-10 h-[176px] w-full opacity-85 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[rgba(0,0,0,0.75)] before:via-[rgba(0,0,0,0.5)_76%] before:to-transparent"></div>
 
       {/* Hero Section */}
       <section className="relative h-[600px] overflow-hidden">
@@ -484,93 +414,6 @@ export default function Page() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white pt-16 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4 border-b-2 border-blue-500 pb-2">
-                LA VOIX DE NOS CLIENTS
-              </h3>
-              <div className="bg-gray-800 p-4 rounded">
-                <p className="italic mb-4">"Testimonial text here..."</p>
-                <p className="font-semibold">Steven A. Judge</p>
-                <p className="text-sm text-gray-400">
-                  President/CEO Bob-White Systems, U.S.A
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold mb-4 border-b-2 border-blue-500 pb-2">
-                INSTALLÉS EN
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <p className="font-semibold">Quartier général - Usine</p>
-                  <p className="text-sm text-gray-400">Address details...</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Agrinio Centre de services</p>
-                  <p className="text-sm text-gray-400">
-                    Route nationale Agrinio-Arta, Neapoli, Agrinio 301 00
-                  </p>
-                  <p className="text-sm text-gray-400">t: (+30) 26410 91236</p>
-                </div>
-                <div className="flex gap-4 mt-4">
-                  <Icon path={mdiFacebook} size={1} />
-                  <Icon path={mdiInstagram} size={1} />
-                  <Icon path={mdiLinkedin} size={1} />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold mb-4 border-b-2 border-blue-500 pb-2">
-                CONTACTEZ-NOUS
-              </h3>
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Nom"
-                  className="w-full p-2 bg-gray-800 rounded"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full p-2 bg-gray-800 rounded"
-                />
-                <select className="w-full p-2 bg-gray-800 rounded">
-                  <option>Département</option>
-                  {/* Add options */}
-                </select>
-                <textarea
-                  placeholder="Message"
-                  rows={4}
-                  className="w-full p-2 bg-gray-800 rounded"
-                />
-                <Button className="w-full bg-blue-500 hover:bg-blue-600">
-                  Envoyer
-                </Button>
-              </form>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 pt-8 flex flex-wrap justify-center items-center gap-4">
-            <img
-              src="/logo-nobg-removebg-preview.png"
-              alt="Logo"
-              width={150}
-              height={40}
-              className="mb-4 md:mb-0"
-            />
-            <p className="text-gray-400 text-center text-balance">
-              {t("footer.rights")}
-            </p>
-          </div>
-        </div>
-      </footer>
 
       {/* Scroll to Top Button */}
       <AnimatePresence>

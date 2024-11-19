@@ -4,8 +4,6 @@ export default {
     home: "Accueil",
     company: "Société",
     products: "Produits",
-    portfolio: "Portfolio",
-    library: "Bibliothèque",
     contactUs: "Contactez-nous",
   },
   hero: {
