@@ -7,13 +7,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Snowflake,
@@ -71,6 +71,61 @@ const newsItems = [
     title: "Partnership Announcement",
     description: "Expanding our global reach with new partnerships",
     image: "/images/placeholder.svg",
+  },
+];
+
+const completedProjects = [
+  {
+    id: 1,
+    title: "Ferme Laitière Moderne",
+    description:
+      "Installation d'un système de traite automatisé pour 500 vaches",
+    image: "/images/placeholder.svg",
+    location: "Sétif, Algérie",
+    year: 2022,
+  },
+  {
+    id: 2,
+    title: "Coopérative Agricole El Baraka",
+    description:
+      "Mise en place d'un système de refroidissement du lait de grande capacité",
+    image: "/images/placeholder.svg",
+    location: "Blida, Algérie",
+    year: 2021,
+  },
+  {
+    id: 3,
+    title: "Ferme Caprine des Aurès",
+    description:
+      "Installation d'un système de traite pour chèvres et de transformation fromagère",
+    image: "/images/placeholder.svg",
+    location: "Batna, Algérie",
+    year: 2023,
+  },
+  {
+    id: 4,
+    title: "Centre de Collecte Laitier",
+    description: "Équipement complet d'un centre de collecte de lait régional",
+    image: "/images/placeholder.svg",
+    location: "Oran, Algérie",
+    year: 2022,
+  },
+  {
+    id: 5,
+    title: "Ferme Ovine de l'Atlas",
+    description: "Modernisation des installations de traite pour brebis",
+    image: "/images/placeholder.svg",
+    location: "Médéa, Algérie",
+    year: 2021,
+  },
+  {
+    id: 6,
+    title: "Complexe Agroalimentaire du Sud",
+    description:
+      "Installation d'un système intégré de traite et de transformation laitière",
+    image: "/images/placeholder.svg",
+    location: "Ghardaïa, Algérie",
+    year: 2023,
   },
 ];
 
@@ -347,7 +402,7 @@ export default function Page() {
       </section>
 
       {/* Actualités Section with Pagination */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold">ACTUALITÉS</h2>
@@ -411,6 +466,62 @@ export default function Page() {
                 </motion.div>
               ))}
             </AnimatePresence>
+          </div>
+        </div>
+      </section> */}
+
+      {/* Projets Réalisés Section */}
+      <section className="py-20 bg-gray-50" id="projets">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center">
+            Projets Réalisés
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {completedProjects.map((project) => (
+              <Dialog key={project.id}>
+                <DialogTrigger asChild>
+                  <div className="cursor-pointer group">
+                    <div className="relative overflow-hidden rounded-lg shadow-lg">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={400}
+                        height={300}
+                        className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <p className="text-white text-lg font-semibold">
+                          {project.title}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>{project.title}</DialogTitle>
+                    <DialogDescription>
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        width={400}
+                        height={300}
+                        className="w-full h-48 object-cover rounded-lg mb-4"
+                      />
+                      <p className="mb-2">{project.description}</p>
+                      <p className="text-sm text-gray-500">
+                        <span className="font-semibold">Lieu:</span>{" "}
+                        {project.location}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        <span className="font-semibold">Année:</span>{" "}
+                        {project.year}
+                      </p>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            ))}
           </div>
         </div>
       </section>
