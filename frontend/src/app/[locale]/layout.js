@@ -1,32 +1,29 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { I18nProviderClient } from "@/locales/client";
-import { LandingNavBar, Navbar2 } from "@/components/Navbar";
+import { LandingNavBar } from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function SubLayout({ children, params }) {
   const { locale } = params;
-  const isRootRoute = window.location.pathname === `/${locale}`;
+  const pathname = usePathname();
+
+  // Conditionally exclude the navbar based on the route
+  const showNavbar = !pathname.includes("/products/");
 
   return (
     <I18nProviderClient locale={locale} fallback={<p>Loading...</p>}>
-      {isRootRoute ? (
-        <div className="absolute top-0 w-full h-36 z-20">
-          {/* Header */}
-          <LandingNavBar />
-        </div>
+      {showNavbar ? (
+        <>
+          <div className="absolute top-0 w-full h-36 z-20">
+            <LandingNavBar />
+          </div>
+          <main>{children}</main>
+        </>
       ) : (
-        <Navbar2 />
+        <div>{children}</div>
       )}
-      <main
-        className={
-          isRootRoute
-            ? ""
-            : "container mx-auto px-4 my-8 h-full flex items-center relative"
-        }
-      >
-        {children}
-      </main>
       <Footer />
     </I18nProviderClient>
   );

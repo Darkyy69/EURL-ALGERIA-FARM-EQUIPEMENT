@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useI18n } from "@/locales/client";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,10 @@ import { mdiFacebook, mdiInstagram, mdiLinkedin } from "@mdi/js";
 export default function Footer() {
   const t = useI18n();
   return (
-    <footer className="relative bg-gray-900 text-white pt-16 pb-8 overflow-hidden" id="contact">
+    <footer
+      className="relative bg-gray-900 text-white pt-16 pb-8 overflow-hidden"
+      id="contact"
+    >
       {/* Decorative shapes */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         <div className="absolute -top-24 -left-24 w-48 h-48 bg-[#22C55E] rounded-full opacity-10"></div>
@@ -23,7 +26,9 @@ export default function Footer() {
               LA VOIX DE NOS CLIENTS
             </h3>
             <div className="bg-gray-800 p-4 rounded-lg shadow-md">
-              <p className="italic mb-4">"Testimonial text here..."</p>
+              <p className="italic mb-4">
+                `&quot;`Testimonial text here...`&quot;`
+              </p>
               <p className="font-semibold">Steven A. Judge</p>
               <p className="text-sm text-gray-400">
                 President/CEO Bob-White Systems, U.S.A
@@ -48,13 +53,22 @@ export default function Footer() {
                 <p className="text-sm text-gray-400">t: (+30) 26410 91236</p>
               </div>
               <div className="flex gap-4 mt-4">
-                <a href="#" className="text-[#22C55E] hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-[#22C55E] hover:text-white transition-colors"
+                >
                   <Icon path={mdiFacebook} size={1} />
                 </a>
-                <a href="#" className="text-[#22C55E] hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-[#22C55E] hover:text-white transition-colors"
+                >
                   <Icon path={mdiInstagram} size={1} />
                 </a>
-                <a href="#" className="text-[#22C55E] hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="text-[#22C55E] hover:text-white transition-colors"
+                >
                   <Icon path={mdiLinkedin} size={1} />
                 </a>
               </div>

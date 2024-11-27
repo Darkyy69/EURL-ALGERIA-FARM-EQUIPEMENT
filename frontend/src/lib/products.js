@@ -662,9 +662,9 @@ Les tanks MP Powertank sont proposés en 18 capacités, de type rond, de 1 500 �
     },
   },
   "systeme-traite": {
-    "machine-a-traire": {
-      name: "Machine à traire",
-      link: "machine-a-traire",
+    "machines-a-traire": {
+      name: "Machines à traire",
+      link: "machines-a-traire",
       category: "Système de traite",
       description:
         "Notre machine à traire est conçue pour offrir une expérience de traite efficace et confortable, tant pour l'éleveur que pour les vaches.",

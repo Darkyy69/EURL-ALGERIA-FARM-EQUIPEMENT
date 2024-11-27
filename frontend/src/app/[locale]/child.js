@@ -256,7 +256,7 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="w-full bg-white">
       <div className="absolute inset-0 z-10 h-[176px] w-full opacity-85 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[rgba(0,0,0,0.75)] before:via-[rgba(0,0,0,0.5)_76%] before:to-transparent"></div>
 
       {/* Hero Section */}
@@ -267,9 +267,9 @@ export default function Page() {
           alt="Hero background"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="container mx-auto px-4 h-full flex items-center relative">
+        <div className="absolute w-full h-full flex items-center">
           <motion.div
-            className="max-w-3xl"
+            className="max-w-3xl container ml-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -286,7 +286,7 @@ export default function Page() {
               {t("hero.titleRest")}
             </motion.h1>
             <motion.p
-              className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl"
+              className="text-base md:text-xl text-gray-200 mb-8 max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -400,75 +400,6 @@ export default function Page() {
           </div>
         </div>
       </section>
-
-      {/* Actualités Section with Pagination */}
-      {/* <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">ACTUALITÉS</h2>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={prevPage}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                aria-label="Previous page"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <div className="flex gap-2">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentNewsPage(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      currentNewsPage === index ? "bg-green-600" : "bg-gray-300"
-                    }`}
-                    aria-label={`Go to page ${index + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={nextPage}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                aria-label="Next page"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <AnimatePresence mode="wait">
-              {getCurrentPageItems().map((news) => (
-                <motion.div
-                  key={news.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Card>
-                    <img
-                      src={news.image}
-                      alt={news.title}
-                      width={400}
-                      height={300}
-                      className="w-full h-48 object-cover"
-                    />
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold mb-2">{news.title}</h3>
-                      <p className="text-sm text-gray-600 mb-4">
-                        {news.description}
-                      </p>
-                      <Button variant="link" className="text-green-600">
-                        Read more
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </div>
-      </section> */}
 
       {/* Projets Réalisés Section */}
       <section className="py-20 bg-gray-50" id="projets">
