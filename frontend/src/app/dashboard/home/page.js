@@ -19,8 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Toaster } from "@/components/ui/toaster";
-import { toast } from "@/components/ui/use-toast";
 
 export default function GeneralContentPage() {
   const [generalContent, setGeneralContent] = useState([]);
@@ -42,11 +40,6 @@ export default function GeneralContentPage() {
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
-      toast({
-        title: "Error",
-        description: "Failed to fetch content. Please try again.",
-        variant: "destructive",
-      });
     }
   };
 
@@ -60,7 +53,11 @@ export default function GeneralContentPage() {
   };
 
   const handleEditContent = (content) => {
-    setEditingContent(content);
+    setEditingContent({
+      id: content.id,
+      section_name: content.section_name,
+      content: content.content
+    });
     setIsFormOpen(true);
     setActiveTab(content.section_name);
   };
@@ -70,17 +67,8 @@ export default function GeneralContentPage() {
       try {
         await axios.delete(`https://abovines.com/api/general-content.php?id=${id}`);
         fetchGeneralContent();
-        toast({
-          title: "Success",
-          description: "Content deleted successfully.",
-        });
       } catch (err) {
         setError(err.message);
-        toast({
-          title: "Error",
-          description: "Failed to delete content. Please try again.",
-          variant: "destructive",
-        });
       }
     }
   };
@@ -156,7 +144,7 @@ export default function GeneralContentPage() {
                   {section.content && typeof section.content === 'object' && (
                     <ul>
                       {Object.entries(section.content).map(([key, value]) => (
-                        <li key={key}>{key}: {value}</li>
+                        <li key={key}>{key}: {JSON.stringify(value)}</li>
                       ))}
                     </ul>
                   )}
@@ -259,7 +247,6 @@ export default function GeneralContentPage() {
           />
         </DialogContent>
       </Dialog>
-      <Toaster />
     </div>
   );
 }

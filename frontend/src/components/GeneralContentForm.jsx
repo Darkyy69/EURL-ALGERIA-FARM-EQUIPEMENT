@@ -6,10 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { PlusCircle, Trash2 } from 'lucide-react';
-import { toast } from "@/components/ui/use-toast";
 
 export function GeneralContentForm({ content, sectionName, onClose, onSubmit }) {
   const [formData, setFormData] = useState({
+    id: content?.id || null,
     section_name: sectionName,
     content: "{}",
   });
@@ -17,6 +17,7 @@ export function GeneralContentForm({ content, sectionName, onClose, onSubmit }) 
   useEffect(() => {
     if (content) {
       setFormData({
+        id: content.id || null,
         section_name: content.section_name || sectionName,
         content: content.content || "{}",
       });
@@ -41,8 +42,9 @@ export function GeneralContentForm({ content, sectionName, onClose, onSubmit }) 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "https://abovines.com/api/general-content.php";
-    const method = content ? "put" : "post";
+    const baseUrl = "https://abovines.com/api/general-content.php";
+    const method = formData.id ? "put" : "post";
+    const url = method === "put" ? `${baseUrl}?id=${formData.id}` : baseUrl;
 
     try {
       await axios({
@@ -51,17 +53,8 @@ export function GeneralContentForm({ content, sectionName, onClose, onSubmit }) 
         data: formData,
       });
       onSubmit();
-      toast({
-        title: "Success",
-        description: "Content has been saved successfully.",
-      });
     } catch (error) {
       console.error("Error saving content:", error);
-      toast({
-        title: "Error",
-        description: "Failed to save content. Please try again.",
-        variant: "destructive",
-      });
     }
   };
 
