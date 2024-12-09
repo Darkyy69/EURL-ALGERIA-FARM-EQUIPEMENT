@@ -8,6 +8,11 @@ export function Sidebar() {
         <ul className="space-y-2">
           <li>
             <Button asChild variant="ghost" className="w-full justify-start">
+              <Link href="/dashboard/home">Home</Link>
+            </Button>
+          </li>
+          <li>
+            <Button asChild variant="ghost" className="w-full justify-start">
               <Link href="/dashboard">Dashboard</Link>
             </Button>
           </li>
@@ -19,21 +24,6 @@ export function Sidebar() {
           <li>
             <Button asChild variant="ghost" className="w-full justify-start">
               <Link href="/dashboard/products">Products</Link>
-            </Button>
-          </li>
-          <li>
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link href="/dashboard/hero">Hero Section</Link>
-            </Button>
-          </li>
-          <li>
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link href="/dashboard/footer">Footer</Link>
-            </Button>
-          </li>
-          <li>
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link href="/dashboard/about">About Section</Link>
             </Button>
           </li>
         </ul>
