@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Menu,
@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import { useI18n, useCurrentLocale, useChangeLocale } from "@/locales/client";
+import { useDataContext } from "./DataProvider";
 
 // Import the fonts
 import { Montserrat, Roboto, Poppins } from "next/font/google";
@@ -155,6 +156,7 @@ const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 const poppins = Poppins({ weight: ["400", "600"], subsets: ["latin"] });
 
 export function LandingNavBar() {
+  const { headerContent } = useDataContext();
   const t = useI18n();
   const currentLocale = useCurrentLocale();
   const changeLocale = useChangeLocale();
@@ -174,11 +176,11 @@ export function LandingNavBar() {
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>(+213) 661 82 60 38</span>
+                <span>{headerContent.landline}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>contact@abovines.com</span>
+                <span>{headerContent.email}</span>
               </div>
             </div>
             <div className="flex items-center gap-4">

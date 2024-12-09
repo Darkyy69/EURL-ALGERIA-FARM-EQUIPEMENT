@@ -5,6 +5,7 @@ import { useI18n, useCurrentLocale, useChangeLocale } from "@/locales/client";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import Link from "next/link";
 import {
   Dialog,
@@ -14,148 +15,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Snowflake,
-  Truck,
-  MilkOff,
-  Home,
-  Droplet,
-  Sun,
-  Search,
-  Globe,
-  Phone,
-  Mail,
-  ArrowUp,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-} from "lucide-react";
-
-// News data
-const newsItems = [
-  {
-    id: 1,
-    title: "1st International Animal Breeding Fair-Uzbekistan",
-    description:
-      "Milkplan participates in the 1st International Animal Breeding Fair in Uzbekistan",
-    image: "/images/placeholder.svg",
-  },
-  {
-    id: 2,
-    title: "World Dairy Expo 2023",
-    description:
-      "Successful participation in the International World Dairy Expo",
-    image: "/images/placeholder.svg",
-  },
-  {
-    id: 3,
-    title: "New Product Launch",
-    description: "Introducing our latest innovation in dairy farming",
-    image: "/images/placeholder.svg",
-  },
-  {
-    id: 4,
-    title: "Industry Award",
-    description: "Recognition for excellence in agricultural equipment",
-    image: "/images/placeholder.svg",
-  },
-  {
-    id: 5,
-    title: "Technology Summit",
-    description: "Showcasing next-generation farming solutions",
-    image: "/images/placeholder.svg",
-  },
-  {
-    id: 6,
-    title: "Partnership Announcement",
-    description: "Expanding our global reach with new partnerships",
-    image: "/images/placeholder.svg",
-  },
-];
-
-const completedProjects = [
-  {
-    id: 1,
-    title: "Ferme Laitière Moderne",
-    description:
-      "Installation d'un système de traite automatisé pour 500 vaches",
-    image: "/images/placeholder.svg",
-    location: "Sétif, Algérie",
-    year: 2022,
-  },
-  {
-    id: 2,
-    title: "Coopérative Agricole El Baraka",
-    description:
-      "Mise en place d'un système de refroidissement du lait de grande capacité",
-    image: "/images/placeholder.svg",
-    location: "Blida, Algérie",
-    year: 2021,
-  },
-  {
-    id: 3,
-    title: "Ferme Caprine des Aurès",
-    description:
-      "Installation d'un système de traite pour chèvres et de transformation fromagère",
-    image: "/images/placeholder.svg",
-    location: "Batna, Algérie",
-    year: 2023,
-  },
-  {
-    id: 4,
-    title: "Centre de Collecte Laitier",
-    description: "Équipement complet d'un centre de collecte de lait régional",
-    image: "/images/placeholder.svg",
-    location: "Oran, Algérie",
-    year: 2022,
-  },
-  {
-    id: 5,
-    title: "Ferme Ovine de l'Atlas",
-    description: "Modernisation des installations de traite pour brebis",
-    image: "/images/placeholder.svg",
-    location: "Médéa, Algérie",
-    year: 2021,
-  },
-  {
-    id: 6,
-    title: "Complexe Agroalimentaire du Sud",
-    description:
-      "Installation d'un système intégré de traite et de transformation laitière",
-    image: "/images/placeholder.svg",
-    location: "Ghardaïa, Algérie",
-    year: 2023,
-  },
-];
+import { ArrowUp } from "lucide-react";
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(true);
   const t = useI18n();
+  const router = useRouter();
   const currentLocale = useCurrentLocale();
   const changeLocale = useChangeLocale();
-  const [currentNewsPage, setCurrentNewsPage] = useState(0);
-  const itemsPerPage = 3;
 
-  const totalPages = Math.ceil(newsItems.length / itemsPerPage);
   const [scrollY, setScrollY] = useState(0);
+
+  const [heroContent, setHeroContent] = useState({});
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [productCategories, setProductCategories] = useState([]);
+  const [companyInfo, setCompanyInfo] = useState([]);
+  const [completedProjects, setCompletedProjects] = useState([]);
 
   const languages = [
     { value: "fr", label: "Français" },
     { value: "en", label: "English" },
   ];
-
-  const getCurrentPageItems = () => {
-    const start = currentNewsPage * itemsPerPage;
-    return newsItems.slice(start, start + itemsPerPage);
-  };
-
-  const nextPage = () => {
-    setCurrentNewsPage((prev) => (prev + 1) % totalPages);
-  };
-
-  const prevPage = () => {
-    setCurrentNewsPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -163,99 +45,50 @@ export default function Page() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const productCategoriesSection = [
-    {
-      icon: <Snowflake className="w-6 h-6" />,
-      label: t("products.categories.cooling"),
-    },
-    {
-      icon: <Truck className="w-6 h-6" />,
-      label: t("products.categories.transfer"),
-    },
-    {
-      icon: <MilkOff className="w-6 h-6" />,
-      label: t("products.categories.milking"),
-    },
-    {
-      icon: <Home className="w-6 h-6" />,
-      label: t("products.categories.farming"),
-    },
-    {
-      icon: <Droplet className="w-6 h-6" />,
-      label: t("products.categories.treatment"),
-    },
-    {
-      icon: <Sun className="w-6 h-6" />,
-      label: t("products.categories.energy"),
-    },
-  ];
+  useEffect(() => {
+    const fetchGeneralContent = async () => {
+      try {
+        const response = await axios.get(
+          "https://abovines.com/api/general-content.php"
+        );
+        console.log(response.data);
+        response.data.forEach((item) => {
+          const content = JSON.parse(item.content);
+          if (item.section_name === "hero") {
+            setHeroContent(content);
+          } else if (item.section_name === "company") {
+            setCompanyInfo(content);
+          } else if (item.section_name === "featured_products") {
+            setFeaturedProducts(content);
+          } else if (item.section_name === "completed_projects") {
+            setCompletedProjects(content);
+          }
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const featuredProducts = [
-    {
-      title: t("products.featured.title1"),
-      description: t("products.featured.description1"),
-      image: "/images/featured_products/slider_milkcab.png",
-    },
-    {
-      title: t("products.featured.title2"),
-      description: t("products.featured.description2"),
-      image: "/images/featured_products/slider_vertitank.png",
-    },
-    {
-      title: t("products.featured.title3"),
-      description: t("products.featured.description3"),
-      image: "/images/featured_products/slider_f4a.png",
-    },
-  ];
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://abovines.com/api/categories.php"
+        );
+        console.log(response.data);
+        setProductCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  // Product categories data
-  const productCategories = {
-    "refroidissement-du-lait": {
-      icon: <Snowflake className="w-6 h-6" />,
-      label: "Refroidissement du lait",
-      items: [
-        {
-          title: "Tanks à lait de type ouvert",
-          subcategories: ["MP Veritank", "MP Standard", "MP Control"],
-        },
-        {
-          title: "Tanks à lait de type fermé",
-          subcategories: ["MP Powertank", "MP Robotic"],
-        },
-        {
-          title: "Systèmes de lavage",
-          subcategories: [],
-        },
-      ],
-    },
-    "transport-du-lait": {
-      icon: <Truck className="w-6 h-6" />,
-      label: "Transport du lait",
-      items: [
-        {
-          title: "Citernes de transport du lait",
-          subcategories: ["MP MilkTransfer", "MP CoolMilk Transfer"],
-        },
-      ],
-    },
-    "systemes-de-traite": {
-      icon: <MilkOff className="w-6 h-6" />,
-      label: "Systèmes de traite",
-      items: [
-        {
-          title: "Vaches",
-          subcategories: ["MP Armektron", "MP Dynamic"],
-        },
-        {
-          title: "Chèvres et Brebis",
-          subcategories: ["S&G Armektron", "Standard"],
-        },
-      ],
-    },
-    // Add other categories similarly
-  };
+    fetchGeneralContent();
+    fetchCategories();
+    setIsLoading(false);
+  }, []);
 
-  return (
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : (
     <div className="w-full bg-white">
       <div className="absolute inset-0 z-10 h-[176px] w-full opacity-85 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[rgba(0,0,0,0.75)] before:via-[rgba(0,0,0,0.5)_76%] before:to-transparent"></div>
 
@@ -263,7 +96,7 @@ export default function Page() {
       <section className="relative h-[600px] overflow-hidden">
         <img
           className="absolute object-cover object-center w-full h-full"
-          src="/images/hero/hero.webp"
+          src={heroContent.image}
           alt="Hero background"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -281,9 +114,11 @@ export default function Page() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
-                {t("hero.titleHighlight")}
+                {/* {t("hero.titleHighlight")} */}
+                {heroContent?.title?.split(" ")[0]}
               </span>{" "}
-              {t("hero.titleRest")}
+              {/* {t("hero.titleRest")} */}
+              {heroContent?.title?.split(" ").slice(1).join(" ")}
             </motion.h1>
             <motion.p
               className="text-base md:text-xl text-gray-200 mb-8 max-w-2xl"
@@ -291,15 +126,24 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              {t("hero.description")}
+              {/* {t("hero.description")} */}
+              {heroContent.subtitle}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <Button className="bg-green-500 text-white hover:bg-green-600 transition-colors duration-300 text-lg px-8 py-3 rounded-full shadow-lg hover:shadow-xl">
-                {t("hero.learnMore")}
+              <Button
+                onClick={() =>
+                  document
+                    .getElementById("company")
+                    .scrollIntoView({ behavior: "smooth" })
+                }
+                className="bg-green-500 text-white hover:bg-green-600 transition-colors duration-300 text-lg px-8 py-3 rounded-full shadow-lg hover:shadow-xl"
+              >
+                {/* {t("hero.learnMore")} */}
+                {heroContent.button_text}
               </Button>
             </motion.div>
           </motion.div>
@@ -322,7 +166,7 @@ export default function Page() {
                   </div>
                 </div>
                 <h3 className="text-xl font-semibold mb-4">{product.title}</h3>
-                <p className="text-gray-600">{product.description}</p>
+                <p className="text-gray-600 h-20">{product.description}</p>
                 <Button variant="link" className="text-green-600 mt-4">
                   {t("products.readMore")}
                 </Button>
@@ -343,15 +187,16 @@ export default function Page() {
                 {t("products.categories.title")}
               </h2>
               <div className="space-y-6">
-                {productCategoriesSection.map((category, index) => (
+                {productCategories.map((category, index) => (
                   <button
                     key={index}
+                    onClick={() => router.push(`products/${category.slug}`)}
                     className="flex items-center gap-4 text-white hover:bg-green-600/50 w-full p-2 rounded transition-colors"
                   >
-                    <div className="bg-white/20 p-2 rounded-full">
-                      {category.icon}
+                    <div className="bg-white/20 p-2 rounded-full w-6 h-6">
+                      <img src={category.icon} alt="icon" />
                     </div>
-                    <span>{category.label}</span>
+                    <span>{category.title}</span>
                   </button>
                 ))}
               </div>
@@ -361,42 +206,32 @@ export default function Page() {
       </section>
 
       {/* Company Info Cards */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50" id="company">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="bg-[#40E0D0]/20">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4">
-                  {t("company.title")}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {t("company.description")}
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-200">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4">
-                  {t("company.values")}
-                </h3>
-                <ul className="space-y-2 text-gray-600">
-                  <li>Persistence in quality</li>
-                  <li>Customer focus</li>
-                  <li>Emphasis on flexibility</li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="bg-green-100">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4">
-                  {t("company.international")}
-                </h3>
-                <p className="text-gray-600">
-                  Our international development strategy strengthens our global
-                  market presence.
-                </p>
-              </CardContent>
-            </Card>
+            {companyInfo?.map((item, index) => {
+              const bgColorClasses = [
+                "bg-[#40E0D0]/20",
+                "bg-gray-200",
+                "bg-green-100",
+              ];
+              const bgColorClass =
+                bgColorClasses[index % bgColorClasses.length];
+
+              // Apply a specific text size for the <p> tag for the first item
+              const descriptionFontSize = index === 0 ? "text-sm" : "text-base";
+
+              return (
+                <Card key={index} className={bgColorClass}>
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-4">{item.title}</h3>
+                    <p className={`${descriptionFontSize} text-gray-600`}>
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -465,7 +300,7 @@ export default function Page() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-8 right-8 bg-green-600 text-white p-3 rounded-full"
+            className="fixed bottom-8 right-8 bg-green-600 text-white p-3 rounded-full z-50"
           >
             <ArrowUp className="w-6 h-6" />
           </motion.button>
