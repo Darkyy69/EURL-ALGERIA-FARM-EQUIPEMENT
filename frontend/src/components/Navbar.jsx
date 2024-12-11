@@ -356,7 +356,7 @@ export function LandingNavBar() {
                     <img
                       src="/logo-nobg-removebg-preview.png"
                       alt="Algeria Farm Equipment Logo"
-                      className="h-10"
+                      className="h-10 w-4/5 object-cover"
                     />
                   </SheetTitle>
                 </SheetHeader>
@@ -694,7 +694,7 @@ export function Navbar2() {
                     <img
                       src="/logo-nobg-removebg-preview.png"
                       alt="Algeria Farm Equipment Logo"
-                      className="h-10"
+                      className="h-10 w-4/5 object-cover"
                     />
                   </SheetTitle>
                 </SheetHeader>
