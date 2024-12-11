@@ -315,7 +315,7 @@ Les tanks à lait MP Vertitank ont prouvé leur valeur dans des milliers d’exp
         "Ressorts d'arrêt":
           "Afin de relever et de maintenir le capot du tank en position ouverte, celui-ci est équipé de ressorts inoxydables (1 à 4 ressorts, selon le modèle) qui offrent une résistance supérieure aux sollicitations de l'utilisation quotidienne (modèles de plus de 200 l).",
 
-        "Entrée de lait": "", // This section was empty in the image
+        "Entrée de lait": "",
       },
     },
     "mp-powertank": {
@@ -848,14 +848,6 @@ Certifié CE`,
         "Augmente la production de viande et de lait à hauteur de 10%.",
       ],
       technicalSpecs: {
-        //         "Caractéristicas et Démarrage Automatique ON/OFF",
-        //  "Installation facile et rapide",
-        //  "Basse consommation d’énergie",
-        // "Facile à nettoyer",
-        //  "Convenable pour 40-50 animaux",
-        //  "L’habileté à tourner à 360°",
-        //  "En cas de blocage de la queue de l’animal, le moteur s’arrête et recommence à fonctioner dans le sens contraire.",
-
         "Puissance du Moteur": "0.25KW",
         Courant: "1.23 A",
         Fréquence: "50 (60Hz optionnel)",

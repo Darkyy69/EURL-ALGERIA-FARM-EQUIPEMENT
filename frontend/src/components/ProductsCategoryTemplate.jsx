@@ -47,7 +47,7 @@ export default function CategoryPage({ products, category }) {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-3xl font-bold mb-6 uppercase text-[#22C55E]"
+          className="text-3xl font-bold mb-6 uppercase text-primary"
         >
           {category.replace("-", " ")}
         </motion.h1>
@@ -66,7 +66,7 @@ export default function CategoryPage({ products, category }) {
               className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out"
             >
               <Card>
-                <Link href={`${product.link}`}>
+                <Link href={`${product.slug}`}>
                   <CardHeader className="relative w-full pt-[75%]">
                     <Image
                       src={product.images[0]}

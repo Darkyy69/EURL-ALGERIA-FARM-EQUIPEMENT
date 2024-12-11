@@ -1,5 +1,8 @@
-import { redirect } from "next/navigation";
+import React from "react";
+import Child from "@/app/child";
 
-export default function RootPage() {
-  return redirect("/fr");
-}
+const pagee = () => {
+  return <Child />;
+};
+
+export default pagee;
