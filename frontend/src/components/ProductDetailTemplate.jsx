@@ -33,7 +33,6 @@ import LoadingScreen from "./Loader";
 export default function ProductDetailTemplate({ product }) {
   const [activeImage, setActiveImage] = useState(0);
   const { isLoading } = useDataContext();
-  console.log(product)
 
   useEffect(() => {
     if (!product && !isLoading) return notFound();
